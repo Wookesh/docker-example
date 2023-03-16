@@ -1,0 +1,30 @@
+services:
+
+  reader:
+    build:
+      context: ../example
+      target: reader-app
+    depends_on:
+      - redis
+    environment:
+      - REDIS_ADDR=redis:6379
+      - KEY=test
+    ports:
+      - 8001:8000
+
+  increaser:
+    build:
+      context: ../example
+      target: increaser-app
+    depends_on:
+      - redis
+    environment:
+      - REDIS_ADDR=redis:6379
+      - KEY=test
+    ports:
+      - 8002:8000
+
+  redis:
+    image: redis
+    expose:
+      - 6379
